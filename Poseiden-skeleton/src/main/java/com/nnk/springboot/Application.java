@@ -9,11 +9,9 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
-
-@ComponentScan(basePackages = {"com.nnk.springboot.repositories"})
-@SpringBootApplication(exclude={DataSourceAutoConfiguration.class, SecurityAutoConfiguration.class})
+//@ComponentScan(basePackages = {"com.nnk.springboot.repositories"})
+@SpringBootApplication
 public class Application {
-
 	
 	public final static Logger LOG =  LogManager.getLogger(Application.class.getName());
 	

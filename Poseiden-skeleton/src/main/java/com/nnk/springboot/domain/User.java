@@ -10,6 +10,11 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "users")
 public class User {
+	
+	
+	public User() {}
+	
+	
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
@@ -17,7 +22,9 @@ public class User {
     private String username;
     @NotBlank(message = "Password is mandatory")
     @Size(min = 8, max = 256)
-    @Pattern(regexp = "?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}", message = "Password must have at least one capital letter, 8 characters one number and one symbol")
+    @Pattern(regexp = "(.*)([A-Z]+)(.*)", message = "The password must have at least one upper case")
+    @Pattern(regexp = "(.*)([\\W]+)(.*)", message = "The password must have at least one symbol")
+   //@Pattern(regexp = "?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}", message = "Password must have at least one capital letter, 8 characters one number and one symbol")
     private String password;
     @NotBlank(message = "FullName is mandatory")
     private String fullname;

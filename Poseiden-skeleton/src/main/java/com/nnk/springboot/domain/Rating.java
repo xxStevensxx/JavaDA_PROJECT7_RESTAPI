@@ -22,6 +22,7 @@ public class Rating {
 	}
 	
     @GeneratedValue(strategy= GenerationType.AUTO)
+    @Id
 	private Integer id;
     @NotBlank(message = "MoodysRating is mandatory")
 	private String moodysRating;
