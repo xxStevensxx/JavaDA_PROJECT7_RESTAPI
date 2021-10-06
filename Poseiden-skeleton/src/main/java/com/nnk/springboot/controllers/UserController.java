@@ -26,11 +26,13 @@ public class UserController {
     public String home(Model model)
     {
         model.addAttribute("users", userRepository.findAll());
+		Application.LOG.info("List acces at: "  +  LocalDateTime.now());
         return "user/list";
     }
 
     @GetMapping("/user/add")
     public String addUser(User bid) {
+		Application.LOG.info("Show panel for add user at : "  +  LocalDateTime.now());
         return "user/add";
     }
 
