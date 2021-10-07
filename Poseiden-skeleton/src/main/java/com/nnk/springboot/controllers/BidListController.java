@@ -55,7 +55,7 @@ public class BidListController {
         // TODO: get Bid by Id and to model then show to the form
     	BidList bid = bidListRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bid Id:" + id));
 		Application.LOG.info("bid id: " + bid.getBidListId() + " Was show in form at: " + LocalDateTime.now());
-    	model.addAttribute("bid", bid);
+    	model.addAttribute("bidList", bid);
         return "bidList/update";
     }
 
@@ -80,7 +80,7 @@ public class BidListController {
     	BidList bid = bidListRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bid Id:" + id));
     	bidListRepository.delete(bid);
 		Application.LOG.info("bid id: " + bid.getBidListId() + " Was delete at: " + LocalDateTime.now());
-    	model.addAttribute("bid", bidListRepository.findAll());
+    	model.addAttribute("bidList", bidListRepository.findAll());
     		return "redirect:/bidList/list";
     }
 }
