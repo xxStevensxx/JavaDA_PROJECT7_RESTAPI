@@ -38,7 +38,7 @@ public class BidListControllerTest {
     @WithMockUser(authorities = "USER")
     public void showBidListTestUser() throws Exception {
 
-    	mockMVC.perform(get("/bidList/list")).andExpect(status().isForbidden());
+    	mockMVC.perform(get("/bidList/list")).andExpect(status().isOk());
     	
     }
 	
