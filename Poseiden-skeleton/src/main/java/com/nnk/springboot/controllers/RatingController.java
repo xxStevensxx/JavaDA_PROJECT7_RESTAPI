@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalDateTime;
 
 import javax.validation.Valid;
 
@@ -44,7 +43,7 @@ public class RatingController {
         // TODO: check data valid and save to db, after saving return Rating list
     	if (!result.hasErrors()) {
     		ratingRepository.save(rating);
-			Application.LOG.info("rating id: " + rating.getId() + " Was save at: " + LocalDateTime.now());
+			Application.LOG.info("metohde validate. rating id: " + rating.getId() + " Was save ");
     		model.addAttribute("ratings", ratingRepository.findAll());
     			return "redirect:/rating/list";
 			
@@ -56,7 +55,7 @@ public class RatingController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         // TODO: get Rating by Id and to model then show to the form
     	Rating rating = ratingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid rating id:" + id));
-		Application.LOG.info("rating id: " + rating.getId() + " Was show in form at: " + LocalDateTime.now());
+		Application.LOG.info("methode showUpdateFormrating. id: " + rating.getId() + " Was show in form");
     	model.addAttribute("rating", rating);
         	return "rating/update";
     }
@@ -71,7 +70,7 @@ public class RatingController {
     	
     	rating.setId(id);
     	ratingRepository.save(rating);
-		Application.LOG.info("rating id: " + rating.getId() + " Was update at: " + LocalDateTime.now());
+		Application.LOG.info("methode updateRating. rating id: " + rating.getId() + " Was update ");
     	model.addAttribute("ratings", ratingRepository.findAll());
         	return "redirect:/rating/list";
     }
@@ -81,7 +80,7 @@ public class RatingController {
         // TODO: Find Rating by Id and delete the Rating, return to Rating list
     	Rating rating = ratingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid rating Id:" + id));
     	ratingRepository.delete(rating);
-		Application.LOG.info("rating id: " + rating.getId() + " Was delete at: " + LocalDateTime.now());
+		Application.LOG.info("methode deleteRating . rating id: " + rating.getId() + " Was delete at: ");
     	model.addAttribute("ratings", ratingRepository.findAll());
         	return "redirect:/rating/list";
     }

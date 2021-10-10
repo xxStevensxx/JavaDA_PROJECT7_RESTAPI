@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalDateTime;
 
 import javax.validation.Valid;
 
@@ -43,7 +42,7 @@ public class BidListController {
         // TODO: check data valid and save to db, after saving return bid list
     	if (!result.hasErrors()) {
 			bidListRepository.save(bid);
-			Application.LOG.info("bid id: " + bid.getBidListId() + " Was save at: " + LocalDateTime.now());
+			Application.LOG.info("Methode Validate. bid id: " + bid.getBidListId() + " Was save");
 			model.addAttribute("bidLists", bidListRepository.findAll());
 				return "redirect:/bidList/list";
 		}
@@ -54,7 +53,7 @@ public class BidListController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         // TODO: get Bid by Id and to model then show to the form
     	BidList bid = bidListRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bid Id:" + id));
-		Application.LOG.info("bid id: " + bid.getBidListId() + " Was show in form at: " + LocalDateTime.now());
+		Application.LOG.info("Methode ShowUpdateForm. bid id: " + bid.getBidListId() + " Was show in form");
     	model.addAttribute("bidList", bid);
         return "bidList/update";
     }
@@ -69,7 +68,7 @@ public class BidListController {
     	
     	bidList.setBidListId(id);
     	bidListRepository.save(bidList);
-		Application.LOG.info("bid id: " + bidList.getBidListId() + " Was update at: " + LocalDateTime.now());
+		Application.LOG.info("methode updateBid. bid id: " + bidList.getBidListId() + " Was update");
     	model.addAttribute("bidList", bidListRepository.findAll());
     		return "redirect:/bidList/list";
     }
@@ -79,7 +78,7 @@ public class BidListController {
         // TODO: Find Bid by Id and delete the bid, return to Bid list
     	BidList bid = bidListRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bid Id:" + id));
     	bidListRepository.delete(bid);
-		Application.LOG.info("bid id: " + bid.getBidListId() + " Was delete at: " + LocalDateTime.now());
+		Application.LOG.info("methode deleteBid. bid id: " + bid.getBidListId() + " Was delete ");
     	model.addAttribute("bidLists", bidListRepository.findAll());
     		return "redirect:/bidList/list";
     }
