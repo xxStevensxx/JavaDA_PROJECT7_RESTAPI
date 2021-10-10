@@ -55,7 +55,6 @@ public class Trade {
 	private String sourceListId;
 	private String side;
 	
-     // TODO: Map columns in data table TRADE with corresponding java fields
 	public Integer getTradeId() {
 		return tradeId;
 	}
