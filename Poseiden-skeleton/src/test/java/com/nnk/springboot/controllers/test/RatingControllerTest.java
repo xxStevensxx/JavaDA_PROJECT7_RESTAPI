@@ -33,31 +33,31 @@ public class RatingControllerTest {
     @Autowired
     private RatingRepository ratingRepository;
 
-    @WithMockUser(authorities = "ADMIN")
     @Test
+    @WithMockUser(authorities = "ADMIN")
     public void showRatingAdmin() throws Exception {
         this.mockMvc.perform(get("/rating/list")).andExpect(status().isOk());
     }
 
-    @WithMockUser()
     @Test
+    @WithMockUser()
     public void showRating() throws Exception {
         this.mockMvc.perform(get("/rating/list")).andExpect(status().isForbidden());
     }
 
-    @WithMockUser(authorities = "ADMIN")
     @Test
+    @WithMockUser(authorities = "ADMIN")
     public void addRatingAdmin() throws Exception {
         this.mockMvc.perform(get("/rating/add")).andExpect(status().isOk());
     }
 
-    @WithMockUser
     @Test
+    @WithMockUser
     public void addRating() throws Exception {
         this.mockMvc.perform(get("/rating/add")).andExpect(status().isForbidden());
     }
 
-//    @Test
+    @Test
     @WithMockUser(authorities = "ADMIN")
     public void validateRatingAdmin() throws Exception {
         this.mockMvc.perform(post("/rating/validate")
@@ -69,8 +69,8 @@ public class RatingControllerTest {
         ).andExpect(redirectedUrl("/rating/list"));
     }
 
-    @WithMockUser(authorities = "ADMIN")
     @Test
+    @WithMockUser(authorities = "ADMIN")
     public void validateRatingAdminError() throws Exception {
         this.mockMvc.perform(post("/rating/validate")
                 .param("sandPRating", "sandPRating")
@@ -80,8 +80,8 @@ public class RatingControllerTest {
         ).andExpect(model().hasErrors());
     }
 
-    @WithMockUser
     @Test
+    @WithMockUser
     public void validateRating() throws Exception {
         this.mockMvc.perform(post("/rating/validate")
                 .param("moodysRating", "moodysRating")
@@ -92,10 +92,9 @@ public class RatingControllerTest {
         ).andExpect(status().isForbidden());
     }
 
-//    @Test
+    @Test
     @WithMockUser(authorities = "ADMIN")
     public void showUpdateRatingAdmin() throws Exception {
-    	
         Rating rating = ratingRepository.save(new Rating("moodysRating", "sandPRating", "fitchRating", 42));
 
         this.mockMvc.perform(get("/rating/update/" + rating.getId()))
@@ -105,7 +104,7 @@ public class RatingControllerTest {
                 .andExpect(model().attribute("rating", Matchers.hasProperty("orderNumber", Matchers.equalTo(42))));
     }
 
-//    @Test
+    @Test
     @WithMockUser
     public void showUpdateRating() throws Exception {
         Rating rating = ratingRepository.save(new Rating("moodysRating", "sandPRating", "fitchRating", 42));
@@ -113,7 +112,7 @@ public class RatingControllerTest {
         this.mockMvc.perform(get("/rating/update/" + rating.getId())).andExpect(status().isForbidden());
     }
 
-//    @Test
+    @Test
     @WithMockUser(authorities = "ADMIN")
     public void updateBidListAdmin() throws Exception {
         Rating rating = ratingRepository.save(new Rating("moodysRating", "sandPRating", "fitchRating", 42));
@@ -126,7 +125,7 @@ public class RatingControllerTest {
         ).andExpect(redirectedUrl("/rating/list"));
     }
 
-//    @Test
+    @Test
     @WithMockUser(authorities = "ADMIN")
     public void updateBidListAdminHasError() throws Exception {
         Rating rating = ratingRepository.save(new Rating("moodysRating", "sandPRating", "fitchRating", 42));
@@ -138,12 +137,11 @@ public class RatingControllerTest {
         ).andExpect(model().hasErrors());
     }
 
-//    @Test
+    @Test
     @WithMockUser(authorities = "ADMIN")
     public void deleteRatingAdmin() throws Exception {
         Rating rating = ratingRepository.save(new Rating("moodysRating", "sandPRating", "fitchRating", 42));
 
         this.mockMvc.perform(get("/rating/delete/" + rating.getId())).andExpect(status().isFound()).andReturn();
     }
-
 }

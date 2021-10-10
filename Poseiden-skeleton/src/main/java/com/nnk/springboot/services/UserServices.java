@@ -24,7 +24,6 @@ public class UserServices implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
 		
-		
 		User user = userRepository.findByUsername(username);
 		
 		if (user == null) {
