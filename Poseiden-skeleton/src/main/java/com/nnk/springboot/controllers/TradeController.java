@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalDateTime;
 
 import javax.validation.Valid;
 
@@ -42,7 +41,7 @@ public class TradeController {
         // TODO: check data valid and save to db, after saving return Trade list
     	if (!result.hasErrors()) {
     		tradeRepository.save(trade);
-			Application.LOG.info("trade id: " + trade.getTradeId() + " Was save at: " + LocalDateTime.now());
+			Application.LOG.info("methode validate. trade id: " + trade.getTradeId() + " Was save");
     		model.addAttribute("trades", tradeRepository.findAll());
             	return "redirect:/trade/list";
 		}
@@ -53,7 +52,7 @@ public class TradeController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         // TODO: get Trade by Id and to model then show to the form
     	Trade trade = tradeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid trade Id:" + id));
-		Application.LOG.info("trade id: " + trade.getTradeId() + " Was show in form at: " + LocalDateTime.now());
+		Application.LOG.info("methode showUpdateForm. trade id: " + trade.getTradeId() + " Was show in form");
     	model.addAttribute("trade", trade);
         	return "trade/update";
     }
@@ -68,7 +67,7 @@ public class TradeController {
     	
     	trade.setTradeId(id);
     	tradeRepository.save(trade);
-		Application.LOG.info("trade id: " + trade.getTradeId() + " Was update at: " + LocalDateTime.now());
+		Application.LOG.info("methode updateTrade. trade id: " + trade.getTradeId() + " Was update");
     	model.addAttribute("trade", tradeRepository.findAll());
     		return "redirect:/trade/list";
     }
@@ -79,7 +78,7 @@ public class TradeController {
         // TODO: Find Trade by Id and delete the Trade, return to Trade list
     	Trade trade = tradeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid trade Id:" + id));
     	tradeRepository.delete(trade);
-		Application.LOG.info("trade id: " + trade.getTradeId() + " Was delete at: " + LocalDateTime.now());
+		Application.LOG.info(" metohde deleteTrade .trade id: " + trade.getTradeId() + " Was delete" );
     	model.addAttribute("trades", tradeRepository.findAll());
     		return "redirect:/trade/list";
     }
