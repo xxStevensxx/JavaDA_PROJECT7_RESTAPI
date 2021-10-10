@@ -13,6 +13,13 @@ import java.sql.Timestamp;
 public class Trade {
 	
 	public Trade() {}
+	
+    public Trade(String account, String type, double buyQuantity) {
+        this.account = account;
+        this.type = type;
+        this.buyQuantity = buyQuantity;
+    }
+    
 	public Trade(String account, String type) {
 		this.account = account;
 		this.type = type;
