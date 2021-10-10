@@ -30,7 +30,7 @@ public class RatingController {
     public String home(Model model)
     {
         // TODO: find all Rating, add to model
-    	model.addAttribute("rating", ratingRepository.findAll());
+    	model.addAttribute("ratings", ratingRepository.findAll());
         	return "rating/list";
     }
 
@@ -45,8 +45,8 @@ public class RatingController {
     	if (!result.hasErrors()) {
     		ratingRepository.save(rating);
 			Application.LOG.info("rating id: " + rating.getId() + " Was save at: " + LocalDateTime.now());
-    		model.addAttribute("rating", ratingRepository.findAll());
-    			return "redirect:/rating/add";
+    		model.addAttribute("ratings", ratingRepository.findAll());
+    			return "redirect:/rating/list";
 			
 		}
         	return "rating/add";
@@ -66,13 +66,13 @@ public class RatingController {
                              BindingResult result, Model model) {
         // TODO: check required fields, if valid call service to update Rating and return Rating list
     	if (result.hasErrors()) {
-			return "/rating/list";
+			return "/rating/update";
 		}
     	
     	rating.setId(id);
     	ratingRepository.save(rating);
 		Application.LOG.info("rating id: " + rating.getId() + " Was update at: " + LocalDateTime.now());
-    	model.addAttribute("rating", ratingRepository.findAll());
+    	model.addAttribute("ratings", ratingRepository.findAll());
         	return "redirect:/rating/list";
     }
 
@@ -82,7 +82,7 @@ public class RatingController {
     	Rating rating = ratingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid rating Id:" + id));
     	ratingRepository.delete(rating);
 		Application.LOG.info("rating id: " + rating.getId() + " Was delete at: " + LocalDateTime.now());
-    	model.addAttribute("rating", ratingRepository.findAll());
+    	model.addAttribute("ratings", ratingRepository.findAll());
         	return "redirect:/rating/list";
     }
 }

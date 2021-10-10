@@ -27,7 +27,7 @@ public class CurveController {
     public String home(Model model)
     {
         // TODO: find all Curve Point, add to model
-    	model.addAttribute("curves", curveRepository.findAll());
+    	model.addAttribute("curvePoints", curveRepository.findAll());
         	return "curvePoint/list";
     }
 
@@ -42,7 +42,7 @@ public class CurveController {
     	if (!result.hasErrors()) {
 			curveRepository.save(curvePoint);
 			Application.LOG.info("curvePoint id: " + curvePoint.getCurveId() + " Was save at: " + LocalDateTime.now());
-			model.addAttribute("curves", curveRepository.findAll());
+			model.addAttribute("curvePoints", curveRepository.findAll());
 				return "redirect:/curvePoint/list";
 		}
         return "curvePoint/add";
@@ -53,7 +53,7 @@ public class CurveController {
         // TODO: get CurvePoint by Id and to model then show to the form
     	CurvePoint curve = curveRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid curvePoint Id:" + id));
 		Application.LOG.info("curvePoint id: " + curve.getCurveId() + " Was show in form at: " + LocalDateTime.now());
-    	model.addAttribute("curve", curve);
+    	model.addAttribute("curvePoint", curve);
         return "curvePoint/update";
     }
 
@@ -69,7 +69,7 @@ public class CurveController {
     	curvePoint.setId(id);
     	curveRepository.save(curvePoint);
 		Application.LOG.info("curvePoint id: " + curvePoint.getCurveId() + " Was update at: " + LocalDateTime.now());
-    	model.addAttribute("curves", curveRepository.findAll());
+    	model.addAttribute("curvePoint", curveRepository.findAll());
     		return "redirect:/curvePoint/list";
     }
 
@@ -79,7 +79,7 @@ public class CurveController {
     	CurvePoint curve = curveRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid curvePoint Id:" + id));
     	curveRepository.delete(curve);
 		Application.LOG.info("curvePoint id: " + curve.getCurveId() + " Was delete at: " + LocalDateTime.now());
-    	model.addAttribute("curves", curveRepository.findAll());
+    	model.addAttribute("curvePoints", curveRepository.findAll());
         	return "redirect:/curvePoint/list";
     }
 }

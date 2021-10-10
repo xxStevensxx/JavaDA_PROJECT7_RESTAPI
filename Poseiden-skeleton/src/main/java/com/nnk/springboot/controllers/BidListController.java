@@ -29,7 +29,7 @@ public class BidListController {
     public String home(Model model)
     {
         // TODO: call service find all bids to show to the view
-    	model.addAttribute("bidList", bidListRepository.findAll());
+    	model.addAttribute("bidLists", bidListRepository.findAll());
         return "bidList/list";
     }
 
@@ -44,7 +44,7 @@ public class BidListController {
     	if (!result.hasErrors()) {
 			bidListRepository.save(bid);
 			Application.LOG.info("bid id: " + bid.getBidListId() + " Was save at: " + LocalDateTime.now());
-			model.addAttribute("bidList", bidListRepository.findAll());
+			model.addAttribute("bidLists", bidListRepository.findAll());
 				return "redirect:/bidList/list";
 		}
         return "bidList/add";
@@ -80,7 +80,7 @@ public class BidListController {
     	BidList bid = bidListRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bid Id:" + id));
     	bidListRepository.delete(bid);
 		Application.LOG.info("bid id: " + bid.getBidListId() + " Was delete at: " + LocalDateTime.now());
-    	model.addAttribute("bidList", bidListRepository.findAll());
+    	model.addAttribute("bidLists", bidListRepository.findAll());
     		return "redirect:/bidList/list";
     }
 }

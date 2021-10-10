@@ -3,7 +3,6 @@ package com.nnk.springboot.domain;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -16,7 +15,14 @@ public class CurvePoint {
 	
 	
 	public CurvePoint() {}
-	//A voir !!
+	public CurvePoint(int id, int curveId, double term, double value) {
+		this.id = id;
+		this.curveId = curveId;
+		this.term = term;
+		this.value = value;
+		
+	}
+	
 	public CurvePoint(int id, double term, double value) {
 		this.id = id;
 		this.term = term;
@@ -27,8 +33,8 @@ public class CurvePoint {
 	@Id
     @GeneratedValue(strategy= GenerationType.AUTO)
 	private Integer id;
-    @NotNull(message = "CurveId is mandatory")
     @Positive
+	@NotNull(message = "CurveId is mandatory")
 	private Integer curveId;
 	private Timestamp asOfDate;
     @NotNull(message = "Term is mandatory")

@@ -27,7 +27,7 @@ public class RuleNameController {
     public String home(Model model)
     {
         // TODO: find all RuleName, add to model
-    	model.addAttribute("rule", ruleRepository.findAll());
+    	model.addAttribute("ruleNames", ruleRepository.findAll());
         return "ruleName/list";
     }
 
@@ -52,7 +52,7 @@ public class RuleNameController {
         // TODO: get RuleName by Id and to model then show to the form
     	RuleName ruleName = ruleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id:" + id));
 		Application.LOG.info("ruleName id: " + ruleName.getId() + " Was show in form at: " + LocalDateTime.now());
-    	model.addAttribute("rule", ruleName);
+    	model.addAttribute("ruleName", ruleName);
         	return "ruleName/update";
     }
 
@@ -66,7 +66,7 @@ public class RuleNameController {
     	ruleName.setId(id);
     	ruleRepository.save(ruleName);
 		Application.LOG.info("ruleName id: " + ruleName.getId() + " Was update at: " + LocalDateTime.now());
-    	model.addAttribute("rules", ruleRepository.findAll());
+    	model.addAttribute("ruleNames", ruleRepository.findAll());
         	return "redirect:/ruleName/list";
     }
 
@@ -76,7 +76,7 @@ public class RuleNameController {
     	RuleName rule = ruleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id:" + id));
     	ruleRepository.delete(rule);
 		Application.LOG.info("ruleName id: " + rule.getId() + " Was delete at: " + LocalDateTime.now());
-    	model.addAttribute("rules", ruleRepository.findAll());
+    	model.addAttribute("ruleNames", ruleRepository.findAll());
         	return "redirect:/ruleName/list";
     }
 }

@@ -28,7 +28,7 @@ public class TradeController {
     public String home(Model model)
     {
         // TODO: find all Trade, add to model
-    	model.addAttribute("trade", tradeRepository.findAll());
+    	model.addAttribute("trades", tradeRepository.findAll());
         return "trade/list";
     }
 
@@ -43,8 +43,8 @@ public class TradeController {
     	if (!result.hasErrors()) {
     		tradeRepository.save(trade);
 			Application.LOG.info("trade id: " + trade.getTradeId() + " Was save at: " + LocalDateTime.now());
-    		model.addAttribute("trade", tradeRepository.findAll());
-            	return "redirect:/trade/add";
+    		model.addAttribute("trades", tradeRepository.findAll());
+            	return "redirect:/trade/list";
 		}
         return "trade/add";
     }
@@ -80,7 +80,7 @@ public class TradeController {
     	Trade trade = tradeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid trade Id:" + id));
     	tradeRepository.delete(trade);
 		Application.LOG.info("trade id: " + trade.getTradeId() + " Was delete at: " + LocalDateTime.now());
-    	model.addAttribute("trade", tradeRepository.findAll());
+    	model.addAttribute("trades", tradeRepository.findAll());
     		return "redirect:/trade/list";
     }
 }
