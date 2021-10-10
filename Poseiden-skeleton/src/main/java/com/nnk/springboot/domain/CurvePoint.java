@@ -15,16 +15,9 @@ public class CurvePoint {
 	
 	
 	public CurvePoint() {}
-	public CurvePoint(int id, int curveId, double term, double value) {
-		this.id = id;
-		this.curveId = curveId;
-		this.term = term;
-		this.value = value;
-		
-	}
 	
-	public CurvePoint(int id, double term, double value) {
-		this.id = id;
+	public CurvePoint(int curveId, double term, double value) {
+		this.curveId = curveId;
 		this.term = term;
 		this.value = value;
 		
