@@ -41,6 +41,7 @@ public class BidListController {
 			bidListRepository.save(bid);
 			
 			Application.LOG.info("bid id: " + bid.getBidListId() + " Was save");
+
 			model.addAttribute("bidLists", bidListRepository.findAll());
 				return "redirect:/bidList/list";
 		}
@@ -50,7 +51,9 @@ public class BidListController {
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
     	BidList bid = bidListRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bid Id:" + id));
+      
 		Application.LOG.info("bid id: " + bid.getBidListId() + " Was show in form ");
+
     	model.addAttribute("bidList", bid);
         return "bidList/update";
     }
@@ -64,7 +67,9 @@ public class BidListController {
     	
     	bidList.setBidListId(id);
     	bidListRepository.save(bidList);
+      
 		Application.LOG.info("bid id: " + bidList.getBidListId() + " Was update");
+
     	model.addAttribute("bidList", bidListRepository.findAll());
     		return "redirect:/bidList/list";
     }
@@ -73,7 +78,9 @@ public class BidListController {
     public String deleteBid(@PathVariable("id") Integer id, Model model) {
     	BidList bid = bidListRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bid Id:" + id));
     	bidListRepository.delete(bid);
+      
 		Application.LOG.info("bid id: " + bid.getBidListId() + " Was delete ");
+
     	model.addAttribute("bidLists", bidListRepository.findAll());
     		return "redirect:/bidList/list";
     }

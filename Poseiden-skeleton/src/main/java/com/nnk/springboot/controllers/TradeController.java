@@ -38,7 +38,9 @@ public class TradeController {
     public String validate(@Valid Trade trade, BindingResult result, Model model) {
     	if (!result.hasErrors()) {
     		tradeRepository.save(trade);
+        
 			Application.LOG.info("trade id: " + trade.getTradeId() + " Was save ");
+
     		model.addAttribute("trades", tradeRepository.findAll());
             	return "redirect:/trade/list";
 		}
@@ -48,7 +50,9 @@ public class TradeController {
     @GetMapping("/trade/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
     	Trade trade = tradeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid trade Id:" + id));
-		Application.LOG.info("trade id: " + trade.getTradeId() + " Was show in form ");
+
+      Application.LOG.info("trade id: " + trade.getTradeId() + " Was show in form ");
+
     	model.addAttribute("trade", trade);
         	return "trade/update";
     }
@@ -62,7 +66,9 @@ public class TradeController {
     	
     	trade.setTradeId(id);
     	tradeRepository.save(trade);
-		Application.LOG.info("trade id: " + trade.getTradeId() + " Was update ");
+
+      Application.LOG.info("trade id: " + trade.getTradeId() + " Was update ");
+
     	model.addAttribute("trade", tradeRepository.findAll());
     		return "redirect:/trade/list";
     }
@@ -72,7 +78,9 @@ public class TradeController {
     	
     	Trade trade = tradeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid trade Id:" + id));
     	tradeRepository.delete(trade);
+      
 		Application.LOG.info("trade id: " + trade.getTradeId() + " Was delete ");
+
     	model.addAttribute("trades", tradeRepository.findAll());
     		return "redirect:/trade/list";
     }

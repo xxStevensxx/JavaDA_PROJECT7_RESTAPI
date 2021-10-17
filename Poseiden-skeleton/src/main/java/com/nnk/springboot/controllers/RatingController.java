@@ -40,7 +40,9 @@ public class RatingController {
     public String validate(@Valid Rating rating, BindingResult result, Model model) {
     	if (!result.hasErrors()) {
     		ratingRepository.save(rating);
+        
 			Application.LOG.info("rating id: " + rating.getId() + " Was save ");
+
     		model.addAttribute("ratings", ratingRepository.findAll());
     			return "redirect:/rating/list";
 			
@@ -51,7 +53,9 @@ public class RatingController {
     @GetMapping("/rating/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
     	Rating rating = ratingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid rating id:" + id));
+      
 		Application.LOG.info("rating id: " + rating.getId() + " Was show in form ");
+
     	model.addAttribute("rating", rating);
         	return "rating/update";
     }
@@ -65,7 +69,9 @@ public class RatingController {
     	
     	rating.setId(id);
     	ratingRepository.save(rating);
+      
 		Application.LOG.info("rating id: " + rating.getId() + " Was update ");
+
     	model.addAttribute("ratings", ratingRepository.findAll());
         	return "redirect:/rating/list";
     }
@@ -74,7 +80,9 @@ public class RatingController {
     public String deleteRating(@PathVariable("id") Integer id, Model model) {
     	Rating rating = ratingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid rating Id:" + id));
     	ratingRepository.delete(rating);
+      
 		Application.LOG.info("rating id: " + rating.getId() + " Was delete ");
+
     	model.addAttribute("ratings", ratingRepository.findAll());
         	return "redirect:/rating/list";
     }

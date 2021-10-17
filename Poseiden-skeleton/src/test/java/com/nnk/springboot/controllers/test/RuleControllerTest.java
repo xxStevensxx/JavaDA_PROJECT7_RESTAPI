@@ -32,33 +32,33 @@ public class RuleControllerTest {
     @Autowired
     private RuleNameRepository ruleNameRepository;
 
-    @WithMockUser(authorities = "ADMIN")
     @Test
-    public void testShowRuleNameAdmin() throws Exception {
+    @WithMockUser(authorities = "ADMIN")
+    public void showRuleNameAdmin() throws Exception {
         this.mockMvc.perform(get("/ruleName/list")).andExpect(status().isOk());
     }
 
-    @WithMockUser
     @Test
-    public void testShowRuleName() throws Exception {
+    @WithMockUser
+    public void sowRuleName() throws Exception {
         this.mockMvc.perform(get("/ruleName/list")).andExpect(status().isForbidden());
     }
 
-    @WithMockUser(authorities = "ADMIN")
     @Test
-    public void testAddRuleNameAdmin() throws Exception {
+    @WithMockUser(authorities = "ADMIN")
+    public void addRuleNameAdmin() throws Exception {
         this.mockMvc.perform(get("/ruleName/add")).andExpect(status().isOk());
     }
 
-    @WithMockUser
     @Test
-    public void testAddRuleName() throws Exception {
+    @WithMockUser
+    public void addRuleName() throws Exception {
         this.mockMvc.perform(get("/ruleName/add")).andExpect(status().isForbidden());
     }
 
+    @Test
     @WithMockUser(authorities = "ADMIN")
-//    @Test
-    public void testValidateRuleNameAdmin() throws Exception {
+    public void validateRuleNameAdmin() throws Exception {
         this.mockMvc.perform(post("/ruleName/validate")
                 .param("name", "name")
                 .param("description", "description")
@@ -70,9 +70,9 @@ public class RuleControllerTest {
         ).andExpect(redirectedUrl("/ruleName/list"));
     }
 
-    @WithMockUser(authorities = "ADMIN")
     @Test
-    public void testValidateRuleNameAdminHasError() throws Exception {
+    @WithMockUser(authorities = "ADMIN")
+    public void validateRuleNameAdminHasError() throws Exception {
         this.mockMvc.perform(post("/ruleName/validate")
                 .param("description", "description")
                 .param("json", "json")
@@ -83,9 +83,9 @@ public class RuleControllerTest {
         ).andExpect(model().hasErrors());
     }
 
-    @WithMockUser
     @Test
-    public void testValidateRuleName() throws Exception {
+    @WithMockUser
+    public void validateRuleName() throws Exception {
         this.mockMvc.perform(post("/ruleName/validate")
                 .param("name", "name")
                 .param("description", "description")
@@ -97,9 +97,9 @@ public class RuleControllerTest {
         ).andExpect(status().isForbidden());
     }
 
+    @Test
     @WithMockUser(authorities = "ADMIN")
-//    @Test
-    public void testShowUpdateRuleNameAdmin() throws Exception {
+    public void showUpdateRuleNameAdmin() throws Exception {
         RuleName ruleName = ruleNameRepository.save(new RuleName("name", "description", "json", "template", "sqlStr", "sqlPart"));
 
         this.mockMvc.perform(get("/ruleName/update/" + ruleName.getId()))
@@ -111,18 +111,17 @@ public class RuleControllerTest {
                 .andExpect(model().attribute("ruleName", Matchers.hasProperty("sqlPart", Matchers.equalTo("sqlPart"))));
     }
 
+    @Test
     @WithMockUser
-//    @Test
-    public void testShowUpdateRuleName() throws Exception {
+    public void showUpdateRuleName() throws Exception {
         RuleName ruleName = ruleNameRepository.save(new RuleName("name", "description", "json", "template", "sqlStr", "sqlPart"));
 
         this.mockMvc.perform(get("/ruleName/update/" + ruleName.getId())).andExpect(status().isForbidden());
     }
 
-
+    @Test
     @WithMockUser(authorities = "ADMIN")
-//    @Test
-    public void testUpdateRuleNameAdmin() throws Exception {
+    public void updateRuleNameAdmin() throws Exception {
         RuleName ruleName = ruleNameRepository.save(new RuleName("name", "description", "json", "template", "sqlStr", "sqlPart"));
         this.mockMvc.perform(post("/ruleName/update/" + ruleName.getId())
                 .param("name", "name")
@@ -135,9 +134,9 @@ public class RuleControllerTest {
         ).andExpect(redirectedUrl("/ruleName/list"));
     }
 
+    @Test
     @WithMockUser(authorities = "ADMIN")
-//    @Test
-    public void testUpdateRuleNameAdminHasError() throws Exception {
+    public void updateRuleNameAdminHasError() throws Exception {
         RuleName ruleName = ruleNameRepository.save(new RuleName("name", "description", "json", "template", "sqlStr", "sqlPart"));
         this.mockMvc.perform(post("/ruleName/update/" + ruleName.getId())
                 .param("description", "description")
@@ -149,13 +148,11 @@ public class RuleControllerTest {
         ).andExpect(model().hasErrors());
     }
 
+    @Test
     @WithMockUser(authorities = "ADMIN")
-//    @Test
-    public void testDeleteRuleNameAdmin() throws Exception {
+    public void deleteRuleNameAdmin() throws Exception {
         RuleName ruleName = ruleNameRepository.save(new RuleName("name", "description", "json", "template", "sqlStr", "sqlPart"));
 
         this.mockMvc.perform(get("/ruleName/delete/" + ruleName.getId())).andExpect(status().isFound()).andReturn();
     }
-
-
 }

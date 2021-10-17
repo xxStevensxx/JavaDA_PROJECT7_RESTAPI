@@ -37,7 +37,9 @@ public class RuleNameController {
     public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
     	if (!result.hasErrors()) {
 			ruleRepository.save(ruleName);
+        
 			Application.LOG.info("ruleName id: " + ruleName.getId() + " Was save ");
+
 				return "redirect:/ruleName/list";
 		}
         	return "ruleName/add";
@@ -46,7 +48,9 @@ public class RuleNameController {
     @GetMapping("/ruleName/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
     	RuleName ruleName = ruleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id:" + id));
+      
 		Application.LOG.info("ruleName id: " + ruleName.getId() + " Was show in form ");
+
     	model.addAttribute("ruleName", ruleName);
         	return "ruleName/update";
     }
@@ -59,7 +63,9 @@ public class RuleNameController {
 		}
     	ruleName.setId(id);
     	ruleRepository.save(ruleName);
+      
 		Application.LOG.info("ruleName id: " + ruleName.getId() + " Was update ");
+
     	model.addAttribute("ruleNames", ruleRepository.findAll());
         	return "redirect:/ruleName/list";
     }
@@ -68,7 +74,9 @@ public class RuleNameController {
     public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
     	RuleName rule = ruleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id:" + id));
     	ruleRepository.delete(rule);
+      
 		Application.LOG.info("ruleName id: " + rule.getId() + " Was delete ");
+
     	model.addAttribute("ruleNames", ruleRepository.findAll());
         	return "redirect:/ruleName/list";
     }

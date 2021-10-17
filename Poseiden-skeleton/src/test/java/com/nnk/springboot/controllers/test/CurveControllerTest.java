@@ -26,120 +26,117 @@ import com.nnk.springboot.repositories.CurvePointRepository;
 public class CurveControllerTest {
 
 	
-	@Autowired
-	private MockMvc mockMVC;
-	
-	@Autowired
-	CurvePointRepository curveRepository;
-	
-		@Test
-		@WithMockUser(authorities = "ADMIN")
-	    public void showCurvePointAdmin() throws Exception {
-	        mockMVC.perform(get("/curvePoint/list")).andExpect(status().isOk());
-	    }
+    @Autowired
+    private MockMvc mockMvc;
 
-    	@Test
-	    @WithMockUser()
-	    public void showCurvePoint() throws Exception {
-    		
-	        this.mockMVC.perform(get("/curvePoint/list")).andExpect(status().isForbidden());
-	    }
-    	
-	    @Test
-	    @WithMockUser(authorities = "ADMIN")
-	    public void addCurvePointAdminTest() throws Exception {
-	        this.mockMVC.perform(get("/curvePoint/add")).andExpect(status().isOk());
-	    }
+    @Autowired
+    private CurvePointRepository curvePointRepository;
 
-	    @WithMockUser
-	    public void testAddCurvePoint() throws Exception {
-	        this.mockMVC.perform(get("/curvePoint/add")).andExpect(status().isForbidden());
-	    }
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    public void showCurvePointAdmin() throws Exception {
+        this.mockMvc.perform(get("/curvePoint/list")).andExpect(status().isOk());
+    }
+    
+    @Test
+    @WithMockUser()
+    public void showCurvePoint() throws Exception {
+        this.mockMvc.perform(get("/curvePoint/list")).andExpect(status().isForbidden());
+    }
 
-	    
-//	    @Test
-	    @WithMockUser(authorities = "ADMIN")
-	    public void validateCurvePointAdminTest() throws Exception {
-	        this.mockMVC.perform(post("/curvePoint/validate")
-	                .param("curveId", "90")
-	                .param("term", "10.0")
-	                .param("value", "10.0")
-	                .with(csrf())
-	        ).andExpect(redirectedUrl("/curvePoint/list"));
-	    }
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    public void addCurvePointAdmin() throws Exception {
+        this.mockMvc.perform(get("/curvePoint/add")).andExpect(status().isOk());
+    }
 
-	    @Test
-	    @WithMockUser(authorities = "ADMIN")
-	    public void validateCurvePointAdminHasErrorTest() throws Exception {
-	        this.mockMVC.perform(post("/curvePoint/validate")
-	                .param("curveId", "90")
-	                .param("term", "A")
-	                .param("value", "B")
-	                .with(csrf())
-	        ).andExpect(model().hasErrors());
-	    }
+    @Test
+    @WithMockUser
+    public void addCurvePoint() throws Exception {
+        this.mockMvc.perform(get("/curvePoint/add")).andExpect(status().isForbidden());
+    }
 
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    public void validateCurvePointAdmin() throws Exception {
+        this.mockMvc.perform(post("/curvePoint/validate")
+                .param("curveId", "90")
+                .param("term", "10.0")
+                .param("value", "10.0")
+                .with(csrf())
+        ).andExpect(redirectedUrl("/curvePoint/list"));
+    }
 
-	    @Test
-	    @WithMockUser
-	    public void validateCurvePointTest() throws Exception {
-	        this.mockMVC.perform(post("/curvePoint/validate")
-	                .param("curveId", "90")
-	                .param("term", "10.0")
-	                .param("value", "10.0")
-	                .with(csrf())
-	        ).andExpect(status().isForbidden());
-	    }
-	    
-	    
-//	    @Test
-	    @WithMockUser(authorities = "ADMIN")
-	    public void showUpdateCurvePointAdminTest() throws Exception {
-	        CurvePoint curvePoint = curveRepository.save(new CurvePoint(42, 10.0d, 10.0d));
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    public void validateCurvePointAdminHasError() throws Exception {
+        this.mockMvc.perform(post("/curvePoint/validate")
+                .param("curveId", "90")
+                .param("term", "A")
+                .param("value", "B")
+                .with(csrf())
+        ).andExpect(model().hasErrors());
+    }
 
-	        this.mockMVC.perform(get("/curvePoint/update/" + curvePoint.getId()))
-	                .andExpect(model().attribute("curvePoint", Matchers.hasProperty("curveId", Matchers.equalTo(42))))
-	                .andExpect(model().attribute("curvePoint", Matchers.hasProperty("term", Matchers.equalTo(10.0d))))
-	                .andExpect(model().attribute("curvePoint", Matchers.hasProperty("value", Matchers.equalTo(10.0d))));
-	    }
-	    
-//	    @Test
-	    @WithMockUser
-	    public void showUpdateCurvePointTest() throws Exception {
-	        CurvePoint curvePoint = curveRepository.save(new CurvePoint(42, 10.0d, 10.0d));
+    @Test
+    @WithMockUser
+    public void validateCurvePoint() throws Exception {
+        this.mockMvc.perform(post("/curvePoint/validate")
+                .param("curveId", "90")
+                .param("term", "10.0")
+                .param("value", "10.0")
+                .with(csrf())
+        ).andExpect(status().isForbidden());
+    }
 
-	        this.mockMVC.perform(get("/curvePoint/update/" + curvePoint.getId())).andExpect(status().isForbidden());
-	    }
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    public void showUpdateCurvePointAdmin() throws Exception {
+        CurvePoint curvePoint = curvePointRepository.save(new CurvePoint(42, 10.0d, 10.0d));
 
-//	    @Test
-	    @WithMockUser(authorities = "ADMIN")
-	    public void updateCurvePointAdminTest() throws Exception {
-	        CurvePoint curvePoint = curveRepository.save(new CurvePoint(42, 10.0d, 10.0d));
-	        this.mockMVC.perform(post("/curvePoint/update/" + curvePoint.getId())
-	                .param("curveId", "91")
-	                .param("term", "12.0")
-	                .param("value", "12.0")
-	                .with(csrf())
-	        ).andExpect(redirectedUrl("/curvePoint/list"));
-	    }
+        this.mockMvc.perform(get("/curvePoint/update/" + curvePoint.getId()))
+                .andExpect(model().attribute("curvePoint", Matchers.hasProperty("curveId", Matchers.equalTo(42))))
+                .andExpect(model().attribute("curvePoint", Matchers.hasProperty("term", Matchers.equalTo(10.0d))))
+                .andExpect(model().attribute("curvePoint", Matchers.hasProperty("value", Matchers.equalTo(10.0d))));
+    }
 
-//	    @Test
-	    @WithMockUser(authorities = "ADMIN")
-	    public void updateCurvePointAdminHasErrorTest() throws Exception {
-	        CurvePoint curvePoint = curveRepository.save(new CurvePoint(42, 10.0d, 10.0d));
-	        this.mockMVC.perform(post("/curvePoint/update/" + curvePoint.getId())
-	                .param("curveId", "91")
-	                .param("term", "12.0")
-	                .param("value", "A")
-	                .with(csrf())
-	        ).andExpect(model().hasErrors());
-	    }
+    @Test
+    @WithMockUser
+    public void showUpdateCurvePoint() throws Exception {
+        CurvePoint curvePoint = curvePointRepository.save(new CurvePoint(42, 10.0d, 10.0d));
 
-//	    @Test
-	    @WithMockUser(authorities = "ADMIN")
-	    public void deleteBidListAdminTest() throws Exception {
-	        CurvePoint curvePoint = curveRepository.save(new CurvePoint(42, 10.0d, 10.0d));
+        this.mockMvc.perform(get("/curvePoint/update/" + curvePoint.getId())).andExpect(status().isForbidden());
+    }
 
-	        this.mockMVC.perform(get("/curvePoint/delete/" + curvePoint.getId())).andExpect(status().isFound()).andReturn();
-	    }
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    public void updateCurvePointAdmin() throws Exception {
+        CurvePoint curvePoint = curvePointRepository.save(new CurvePoint(42, 10.0d, 10.0d));
+        this.mockMvc.perform(post("/curvePoint/update/" + curvePoint.getId())
+                .param("curveId", "91")
+                .param("term", "12.0")
+                .param("value", "12.0")
+                .with(csrf())
+        ).andExpect(redirectedUrl("/curvePoint/list"));
+    }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    public void updateCurvePointAdminHasError() throws Exception {
+        CurvePoint curvePoint = curvePointRepository.save(new CurvePoint(42, 10.0d, 10.0d));
+        this.mockMvc.perform(post("/curvePoint/update/" + curvePoint.getId())
+                .param("curveId", "91")
+                .param("term", "12.0")
+                .param("value", "A")
+                .with(csrf())
+        ).andExpect(model().hasErrors());
+    }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    public void deleteBidListAdmin() throws Exception {
+        CurvePoint curvePoint = curvePointRepository.save(new CurvePoint(42, 10.0d, 10.0d));
+
+        this.mockMvc.perform(get("/curvePoint/delete/" + curvePoint.getId())).andExpect(status().isFound()).andReturn();
+    }
 }

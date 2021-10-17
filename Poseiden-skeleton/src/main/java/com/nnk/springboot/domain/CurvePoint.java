@@ -1,6 +1,5 @@
 package com.nnk.springboot.domain;
 
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,13 +14,6 @@ public class CurvePoint {
 	
 	
 	public CurvePoint() {}
-	public CurvePoint(int id, int curveId, double term, double value) {
-		this.id = id;
-		this.curveId = curveId;
-		this.term = term;
-		this.value = value;
-		
-	}
 	
 	public CurvePoint(int curveId, double term, double value) {
 		this.curveId = curveId;
@@ -80,5 +72,4 @@ public class CurvePoint {
 		this.creationDate = creationDate;
 	}
 
-    // TODO: Map columns in data table CURVEPOINT with corresponding java fields
 }

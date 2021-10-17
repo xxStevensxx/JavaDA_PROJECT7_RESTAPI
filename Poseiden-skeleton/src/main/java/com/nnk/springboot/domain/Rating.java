@@ -5,14 +5,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "rating")
 public class Rating {
 	
 	public Rating() {}
-	public Rating(String moodysRating, String sandPRating, String fitchRating, int orderNumber ) {
+	public Rating(String moodysRating, String sandPRating, String fitchRating, Integer orderNumber ) {
 		
 		this.moodysRating = moodysRating;
 		this.sandPRating = sandPRating;
@@ -34,7 +33,6 @@ public class Rating {
     @Positive
 	private Integer orderNumber;
 	
-    // TODO: Map columns in data table RATING with corresponding java fields
 	public Integer getId() {
 		return id;
 	}
