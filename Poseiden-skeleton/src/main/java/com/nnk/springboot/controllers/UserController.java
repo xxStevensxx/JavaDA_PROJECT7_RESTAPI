@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalDateTime;
 
 import javax.validation.Valid;
 
@@ -26,13 +25,13 @@ public class UserController {
     public String home(Model model)
     {
         model.addAttribute("users", userRepository.findAll());
-		Application.LOG.info("List acces at: "  +  LocalDateTime.now());
+		Application.LOG.info("List acces ");
         return "user/list";
     }
 
     @GetMapping("/user/add")
     public String addUser(User bid) {
-		Application.LOG.info("Show panel for add user at : "  +  LocalDateTime.now());
+		Application.LOG.info("Show panel for add user ");
         return "user/add";
     }
 
@@ -42,7 +41,7 @@ public class UserController {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             user.setPassword(encoder.encode(user.getPassword()));
             userRepository.save(user);
-			Application.LOG.info("user id: " + user.getId() + " Was save at: " + LocalDateTime.now());
+			Application.LOG.info("user id: " + user.getId() + " Was save ");
             model.addAttribute("users", userRepository.findAll());
             return "redirect:/user/list";
         }
@@ -68,7 +67,7 @@ public class UserController {
         user.setPassword(encoder.encode(user.getPassword()));
         user.setId(id);
         userRepository.save(user);
-		Application.LOG.info("user id: " + user.getId() + " Was update at: " + LocalDateTime.now());
+		Application.LOG.info("user id: " + user.getId() + " Was update");
         model.addAttribute("users", userRepository.findAll());
         return "redirect:/user/list";
     }
@@ -77,7 +76,7 @@ public class UserController {
     public String deleteUser(@PathVariable("id") Integer id, Model model) {
         User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         userRepository.delete(user);
-		Application.LOG.info("user id: " + user.getId() + " Was delete at: " + LocalDateTime.now());
+		Application.LOG.info("user id: " + user.getId() + " Was delete ");
         model.addAttribute("users", userRepository.findAll());
         return "redirect:/user/list";
     }

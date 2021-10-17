@@ -13,14 +13,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalDateTime;
 
 import javax.validation.Valid;
 
 
 @Controller
 public class BidListController {
-    // TODO: Inject Bid service
 	
 	@Autowired
 	BidListRepository bidListRepository;
@@ -28,7 +26,6 @@ public class BidListController {
     @RequestMapping("/bidList/list")
     public String home(Model model)
     {
-        // TODO: call service find all bids to show to the view
     	model.addAttribute("bidLists", bidListRepository.findAll());
         return "bidList/list";
     }
@@ -40,10 +37,10 @@ public class BidListController {
 
     @PostMapping("/bidList/validate")
     public String validate(@Valid BidList bid, BindingResult result, Model model) {
-        // TODO: check data valid and save to db, after saving return bid list
     	if (!result.hasErrors()) {
 			bidListRepository.save(bid);
-			Application.LOG.info("bid id: " + bid.getBidListId() + " Was save at: " + LocalDateTime.now());
+			
+			Application.LOG.info("bid id: " + bid.getBidListId() + " Was save");
 			model.addAttribute("bidLists", bidListRepository.findAll());
 				return "redirect:/bidList/list";
 		}
@@ -52,9 +49,8 @@ public class BidListController {
 
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get Bid by Id and to model then show to the form
     	BidList bid = bidListRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bid Id:" + id));
-		Application.LOG.info("bid id: " + bid.getBidListId() + " Was show in form at: " + LocalDateTime.now());
+		Application.LOG.info("bid id: " + bid.getBidListId() + " Was show in form ");
     	model.addAttribute("bidList", bid);
         return "bidList/update";
     }
@@ -62,24 +58,22 @@ public class BidListController {
     @PostMapping("/bidList/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList,
                              BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Bid and return list Bid
     	if (result.hasErrors()) {
     		return"bidList/update";
 		}
     	
     	bidList.setBidListId(id);
     	bidListRepository.save(bidList);
-		Application.LOG.info("bid id: " + bidList.getBidListId() + " Was update at: " + LocalDateTime.now());
+		Application.LOG.info("bid id: " + bidList.getBidListId() + " Was update");
     	model.addAttribute("bidList", bidListRepository.findAll());
     		return "redirect:/bidList/list";
     }
 
     @GetMapping("/bidList/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Bid by Id and delete the bid, return to Bid list
     	BidList bid = bidListRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bid Id:" + id));
     	bidListRepository.delete(bid);
-		Application.LOG.info("bid id: " + bid.getBidListId() + " Was delete at: " + LocalDateTime.now());
+		Application.LOG.info("bid id: " + bid.getBidListId() + " Was delete ");
     	model.addAttribute("bidLists", bidListRepository.findAll());
     		return "redirect:/bidList/list";
     }
