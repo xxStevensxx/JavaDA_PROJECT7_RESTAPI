@@ -19,13 +19,13 @@ import com.nnk.springboot.services.UserServices;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	
-	@Autowired
-	final UserServices userServices; 
-	
-	public SecurityConfig(UserServices userServices) {
-		this.userServices = userServices;
-		
-	}
+//	@Autowired
+//	final UserServices userServices; 
+//	
+//	public SecurityConfig(UserServices userServices) {
+//		this.userServices = userServices;
+//		
+//	}
 	
 	
 	@Override

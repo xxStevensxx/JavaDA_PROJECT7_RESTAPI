@@ -1,9 +1,10 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.Application;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,9 @@ import javax.validation.Valid;
 
 @Controller
 public class BidListController {
+	
+	
+	public final Logger LOG =  LogManager.getLogger(BidListController.class.getName());
 	
 	@Autowired
 	BidListRepository bidListRepository;
@@ -40,7 +44,7 @@ public class BidListController {
     	if (!result.hasErrors()) {
 			bidListRepository.save(bid);
 			
-			Application.LOG.info("bid id: " + bid.getBidListId() + " Was save");
+			LOG.info("bid id: " + bid.getBidListId() + " Was save");
 
 			model.addAttribute("bidLists", bidListRepository.findAll());
 				return "redirect:/bidList/list";
@@ -52,7 +56,7 @@ public class BidListController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
     	BidList bid = bidListRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bid Id:" + id));
       
-		Application.LOG.info("bid id: " + bid.getBidListId() + " Was show in form ");
+		LOG.info("bid id: " + bid.getBidListId() + " Was show in form ");
 
     	model.addAttribute("bidList", bid);
         return "bidList/update";
@@ -68,7 +72,7 @@ public class BidListController {
     	bidList.setBidListId(id);
     	bidListRepository.save(bidList);
       
-		Application.LOG.info("bid id: " + bidList.getBidListId() + " Was update");
+		LOG.info("bid id: " + bidList.getBidListId() + " Was update");
 
     	model.addAttribute("bidList", bidListRepository.findAll());
     		return "redirect:/bidList/list";
@@ -79,7 +83,7 @@ public class BidListController {
     	BidList bid = bidListRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid bid Id:" + id));
     	bidListRepository.delete(bid);
       
-		Application.LOG.info("bid id: " + bid.getBidListId() + " Was delete ");
+		LOG.info("bid id: " + bid.getBidListId() + " Was delete ");
 
     	model.addAttribute("bidLists", bidListRepository.findAll());
     		return "redirect:/bidList/list";

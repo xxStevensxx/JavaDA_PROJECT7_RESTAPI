@@ -1,9 +1,10 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.Application;
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.repositories.CurvePointRepository;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,9 @@ import javax.validation.Valid;
 
 @Controller
 public class CurveController {
+	
+	public final Logger LOG =  LogManager.getLogger(CurveController.class.getName());
+		
 	@Autowired
 	CurvePointRepository curveRepository;
 
@@ -38,7 +42,7 @@ public class CurveController {
     	if (!result.hasErrors()) {
 			curveRepository.save(curvePoint);
         
-			Application.LOG.info("curvePoint id: " + curvePoint.getCurveId() + " Was save ");
+			LOG.info("curvePoint id: " + curvePoint.getCurveId() + " Was save ");
 
 			model.addAttribute("curvePoints", curveRepository.findAll());
 				return "redirect:/curvePoint/list";
@@ -50,7 +54,7 @@ public class CurveController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
     	CurvePoint curve = curveRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid curvePoint Id:" + id));
       
-		Application.LOG.info("curvePoint id: " + curve.getCurveId() + " Was show in form " );
+		LOG.info("curvePoint id: " + curve.getCurveId() + " Was show in form " );
 
     	model.addAttribute("curvePoint", curve);
         return "curvePoint/update";
@@ -67,7 +71,7 @@ public class CurveController {
     	curvePoint.setId(id);
     	curveRepository.save(curvePoint);
       
-		Application.LOG.info("curvePoint id: " + curvePoint.getCurveId() + " Was update ");
+		LOG.info("curvePoint id: " + curvePoint.getCurveId() + " Was update ");
 
     	model.addAttribute("curvePoint", curveRepository.findAll());
     		return "redirect:/curvePoint/list";
@@ -78,7 +82,7 @@ public class CurveController {
     	CurvePoint curve = curveRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid curvePoint Id:" + id));
     	curveRepository.delete(curve);
       
-		Application.LOG.info("curvePoint id: " + curve.getCurveId() + " Was delete ");
+		LOG.info("curvePoint id: " + curve.getCurveId() + " Was delete ");
    
     	model.addAttribute("curvePoints", curveRepository.findAll());
         	return "redirect:/curvePoint/list";

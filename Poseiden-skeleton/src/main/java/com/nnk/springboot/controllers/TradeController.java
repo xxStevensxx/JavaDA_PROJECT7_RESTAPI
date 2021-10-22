@@ -1,9 +1,10 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.Application;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.repositories.TradeRepository;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,8 @@ import javax.validation.Valid;
 
 @Controller
 public class TradeController {
+	
+	public final Logger LOG =  LogManager.getLogger(TradeController.class.getName());
 	
 	@Autowired
 	TradeRepository tradeRepository;
@@ -39,7 +42,7 @@ public class TradeController {
     	if (!result.hasErrors()) {
     		tradeRepository.save(trade);
         
-			Application.LOG.info("trade id: " + trade.getTradeId() + " Was save ");
+			LOG.info("trade id: " + trade.getTradeId() + " Was save ");
 
     		model.addAttribute("trades", tradeRepository.findAll());
             	return "redirect:/trade/list";
@@ -51,7 +54,7 @@ public class TradeController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
     	Trade trade = tradeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid trade Id:" + id));
 
-      Application.LOG.info("trade id: " + trade.getTradeId() + " Was show in form ");
+      LOG.info("trade id: " + trade.getTradeId() + " Was show in form ");
 
     	model.addAttribute("trade", trade);
         	return "trade/update";
@@ -67,7 +70,7 @@ public class TradeController {
     	trade.setTradeId(id);
     	tradeRepository.save(trade);
 
-      Application.LOG.info("trade id: " + trade.getTradeId() + " Was update ");
+      LOG.info("trade id: " + trade.getTradeId() + " Was update ");
 
     	model.addAttribute("trade", tradeRepository.findAll());
     		return "redirect:/trade/list";
@@ -79,7 +82,7 @@ public class TradeController {
     	Trade trade = tradeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid trade Id:" + id));
     	tradeRepository.delete(trade);
       
-		Application.LOG.info("trade id: " + trade.getTradeId() + " Was delete ");
+		LOG.info("trade id: " + trade.getTradeId() + " Was delete ");
 
     	model.addAttribute("trades", tradeRepository.findAll());
     		return "redirect:/trade/list";
