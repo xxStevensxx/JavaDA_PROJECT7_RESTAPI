@@ -1,9 +1,10 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.Application;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.repositories.RatingRepository;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ import javax.validation.Valid;
 @Controller
 public class RatingController {
 	
+	public final Logger LOG =  LogManager.getLogger(RatingController.class.getName());
 	
 	@Autowired
 	RatingRepository ratingRepository;
@@ -41,7 +43,7 @@ public class RatingController {
     	if (!result.hasErrors()) {
     		ratingRepository.save(rating);
         
-			Application.LOG.info("rating id: " + rating.getId() + " Was save ");
+			LOG.info("rating id: " + rating.getId() + " Was save ");
 
     		model.addAttribute("ratings", ratingRepository.findAll());
     			return "redirect:/rating/list";
@@ -54,7 +56,7 @@ public class RatingController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
     	Rating rating = ratingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid rating id:" + id));
       
-		Application.LOG.info("rating id: " + rating.getId() + " Was show in form ");
+		LOG.info("rating id: " + rating.getId() + " Was show in form ");
 
     	model.addAttribute("rating", rating);
         	return "rating/update";
@@ -70,7 +72,7 @@ public class RatingController {
     	rating.setId(id);
     	ratingRepository.save(rating);
       
-		Application.LOG.info("rating id: " + rating.getId() + " Was update ");
+		LOG.info("rating id: " + rating.getId() + " Was update ");
 
     	model.addAttribute("ratings", ratingRepository.findAll());
         	return "redirect:/rating/list";
@@ -81,7 +83,7 @@ public class RatingController {
     	Rating rating = ratingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid rating Id:" + id));
     	ratingRepository.delete(rating);
       
-		Application.LOG.info("rating id: " + rating.getId() + " Was delete ");
+		LOG.info("rating id: " + rating.getId() + " Was delete ");
 
     	model.addAttribute("ratings", ratingRepository.findAll());
         	return "redirect:/rating/list";

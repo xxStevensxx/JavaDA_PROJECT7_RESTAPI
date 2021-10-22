@@ -1,8 +1,10 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.Application;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,9 @@ import javax.validation.Valid;
 
 @Controller
 public class UserController {
+	
+	public final Logger LOG =  LogManager.getLogger(UserController.class.getName());
+
     @Autowired
     private UserRepository userRepository;
 
@@ -25,13 +30,13 @@ public class UserController {
     public String home(Model model)
     {
         model.addAttribute("users", userRepository.findAll());
-		Application.LOG.info("List acces ");
+		LOG.info("List acces ");
         return "user/list";
     }
 
     @GetMapping("/user/add")
     public String addUser(User bid) {
-		Application.LOG.info("Show panel for add user ");
+		LOG.info("Show panel for add user ");
         return "user/add";
     }
 
@@ -42,7 +47,7 @@ public class UserController {
             user.setPassword(encoder.encode(user.getPassword()));
             userRepository.save(user);
           
-			Application.LOG.info("user id: " + user.getId() + " Was save ");
+			LOG.info("user id: " + user.getId() + " Was save ");
 
             model.addAttribute("users", userRepository.findAll());
             return "redirect:/user/list";
@@ -70,7 +75,7 @@ public class UserController {
         user.setId(id);
         userRepository.save(user);
       
-		Application.LOG.info("user id: " + user.getId() + " Was update");
+		LOG.info("user id: " + user.getId() + " Was update");
 
         model.addAttribute("users", userRepository.findAll());
         return "redirect:/user/list";
@@ -81,7 +86,7 @@ public class UserController {
         User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         userRepository.delete(user);
       
-		Application.LOG.info("user id: " + user.getId() + " Was delete ");
+		LOG.info("user id: " + user.getId() + " Was delete ");
 
         model.addAttribute("users", userRepository.findAll());
         return "redirect:/user/list";

@@ -1,9 +1,10 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.Application;
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.repositories.RuleNameRepository;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,10 @@ import javax.validation.Valid;
 
 @Controller
 public class RuleNameController {
+	
+	public final Logger LOG =  LogManager.getLogger(RuleNameController.class.getName());
+
+
 	@Autowired
 	RuleNameRepository ruleRepository;
 
@@ -38,7 +43,7 @@ public class RuleNameController {
     	if (!result.hasErrors()) {
 			ruleRepository.save(ruleName);
         
-			Application.LOG.info("ruleName id: " + ruleName.getId() + " Was save ");
+			LOG.info("ruleName id: " + ruleName.getId() + " Was save ");
 
 				return "redirect:/ruleName/list";
 		}
@@ -49,7 +54,7 @@ public class RuleNameController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
     	RuleName ruleName = ruleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id:" + id));
       
-		Application.LOG.info("ruleName id: " + ruleName.getId() + " Was show in form ");
+		LOG.info("ruleName id: " + ruleName.getId() + " Was show in form ");
 
     	model.addAttribute("ruleName", ruleName);
         	return "ruleName/update";
@@ -64,7 +69,7 @@ public class RuleNameController {
     	ruleName.setId(id);
     	ruleRepository.save(ruleName);
       
-		Application.LOG.info("ruleName id: " + ruleName.getId() + " Was update ");
+		LOG.info("ruleName id: " + ruleName.getId() + " Was update ");
 
     	model.addAttribute("ruleNames", ruleRepository.findAll());
         	return "redirect:/ruleName/list";
@@ -75,7 +80,7 @@ public class RuleNameController {
     	RuleName rule = ruleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id:" + id));
     	ruleRepository.delete(rule);
       
-		Application.LOG.info("ruleName id: " + rule.getId() + " Was delete ");
+		LOG.info("ruleName id: " + rule.getId() + " Was delete ");
 
     	model.addAttribute("ruleNames", ruleRepository.findAll());
         	return "redirect:/ruleName/list";
