@@ -185,5 +185,4 @@ public class BidList {
 		this.side = side;
 	}
 	
-    // TODO: Map columns in data table BIDLIST with corresponding java fields
 }
