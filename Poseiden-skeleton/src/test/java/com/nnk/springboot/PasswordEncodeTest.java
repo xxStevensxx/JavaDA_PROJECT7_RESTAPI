@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Time: 11:26 AM
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PasswordEncodeTest {
     @Test
     public void testPassword() {
