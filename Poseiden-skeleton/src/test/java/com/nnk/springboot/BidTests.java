@@ -7,13 +7,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Optional;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class BidTests {
 
 	@Autowired
@@ -27,6 +29,7 @@ public class BidTests {
 		bid = bidListRepository.save(bid);
 		Assert.assertNotNull(bid.getBidListId());
 		Assert.assertEquals(bid.getBidQuantity(), 10d, 10d);
+
 
 		// Update
 		bid.setBidQuantity(20d);
