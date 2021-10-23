@@ -1,5 +1,5 @@
 Technical:
-Framework: Spring Boot v2.0.4
+Framework: Version: 4.8.1.RELEASE
 Java 8
 Thymeleaf
 Bootstrap v.4.3.1
