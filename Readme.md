@@ -9,6 +9,8 @@ Bootstrap v.4.3.1
 
 
     a) Modifier les nom dans le fichier application-prod.properties par le nom voulu
+    
+    
     b) Modifier le nom de bdd dans le script data.sql situer dans le dossier doc
     
 2) Lancer le script sql via workbench
