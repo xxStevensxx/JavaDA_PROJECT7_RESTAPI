@@ -6,6 +6,8 @@ Bootstrap v.4.3.1
 
 
 1)  Vérifier que vos bdd en local ne porte pas le nom test sinon
+
+
     a) Modifier les nom dans le fichier application-prod.properties par le nom voulu
     b) Modifier le nom de bdd dans le script data.sql situer dans le dossier doc
     
