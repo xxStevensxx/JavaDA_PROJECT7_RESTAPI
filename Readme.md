@@ -15,5 +15,9 @@ Bootstrap v.4.3.1
     
 2) Lancer le script sql via workbench
 6) Cleaner puis compiler l'app
-7) Lancer l'app
-8) Enjoy !!
+7) Lancer l'app via cette commande : mvn spring-boot:run -Dspring-boot.run.profiles=prod 
+        
+        a) en mode test mvn spring-boot:run -Dspring-boot.run.profiles=test
+        b) pour lancer les tests un mvn clean install suffira.
+        
+9) Enjoy !!
