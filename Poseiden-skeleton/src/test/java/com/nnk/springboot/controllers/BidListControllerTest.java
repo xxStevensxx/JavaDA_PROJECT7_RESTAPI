@@ -1,4 +1,4 @@
-package com.nnk.springboot.controllers.test;
+package com.nnk.springboot.controllers;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
