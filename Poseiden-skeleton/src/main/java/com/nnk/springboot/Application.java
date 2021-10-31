@@ -8,12 +8,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Application {
 
-	public final static Logger LOG = LogManager.getLogger(Application.class.getName());
+	public final static Logger log = LogManager.getLogger(Application.class.getName());
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 
-		LOG.info("Application Started");
+		log.info("Application Started");
 
 	}
 }
