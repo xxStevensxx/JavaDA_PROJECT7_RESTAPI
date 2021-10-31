@@ -15,25 +15,25 @@ import com.nnk.springboot.repositories.UserRepository;
 
 @Service
 public class UserServices implements UserDetailsService {
-	
-	
+
 	@Autowired
 	UserRepository userRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+
 		User user = userRepository.findByUsername(username);
-		
+
 		if (user == null) {
-			
-			throw new UsernameNotFoundException(username);	
-		}
-		
+
+			throw new UsernameNotFoundException(username);
+		} 
+
 		GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getRole());
-		UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.singletonList(grantedAuthority));
-		
-				return userDetails;
+		UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getUsername(),
+				user.getPassword(), Collections.singletonList(grantedAuthority));
+
+		return userDetails;
 	}
 
 }

@@ -15,7 +15,7 @@ import java.util.Optional;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-public class BidTests {
+public class BidRepositoryTests {
 
 	@Autowired
 	private BidListRepository bidListRepository;
