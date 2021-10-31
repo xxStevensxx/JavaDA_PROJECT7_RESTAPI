@@ -14,75 +14,74 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 import javax.validation.Valid;
 
 @Controller
 public class RuleNameController {
-	
-	public final Logger LOG =  LogManager.getLogger(RuleNameController.class.getName());
 
+	public final Logger log = LogManager.getLogger(RuleNameController.class.getName());
 
 	@Autowired
 	RuleNameRepository ruleRepository;
 
-    @RequestMapping("/ruleName/list")
-    public String home(Model model)
-    {
-    	model.addAttribute("ruleNames", ruleRepository.findAll());
-        return "ruleName/list";
-    }
+	@RequestMapping("/ruleName/list")
+	public String home(Model model) {
+		model.addAttribute("ruleNames", ruleRepository.findAll());
+		return "ruleName/list";
+	}
 
-    @GetMapping("/ruleName/add")
-    public String addRuleForm(RuleName bid) {
-        return "ruleName/add";
-    }
+	@GetMapping("/ruleName/add")
+	public String addRuleForm(RuleName bid) {
+		return "ruleName/add";
+	}
 
-    @PostMapping("/ruleName/validate")
-    public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
-    	if (!result.hasErrors()) {
+	@PostMapping("/ruleName/validate")
+	public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
+		if (!result.hasErrors()) {
 			ruleRepository.save(ruleName);
-        
-			LOG.info("ruleName id: " + ruleName.getId() + " Was save ");
 
-				return "redirect:/ruleName/list";
+			log.info("ruleName id: " + ruleName.getId() + " Was save ");
+
+			return "redirect:/ruleName/list";
 		}
-        	return "ruleName/add";
-    }
+		return "ruleName/add";
+	}
 
-    @GetMapping("/ruleName/update/{id}")
-    public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-    	RuleName ruleName = ruleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id:" + id));
-      
-		LOG.info("ruleName id: " + ruleName.getId() + " Was show in form ");
+	@GetMapping("/ruleName/update/{id}")
+	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+		RuleName ruleName = ruleRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id:" + id));
 
-    	model.addAttribute("ruleName", ruleName);
-        	return "ruleName/update";
-    }
+		log.info("ruleName id: " + ruleName.getId() + " Was show in form ");
 
-    @PostMapping("/ruleName/update/{id}")
-    public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName,
-                             BindingResult result, Model model) {
-    	if (result.hasErrors()) {
+		model.addAttribute("ruleName", ruleName);
+		return "ruleName/update";
+	}
+
+	@PostMapping("/ruleName/update/{id}")
+	public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName, BindingResult result,
+			Model model) {
+		if (result.hasErrors()) {
 			return "ruleName/update";
 		}
-    	ruleName.setId(id);
-    	ruleRepository.save(ruleName);
-      
-		LOG.info("ruleName id: " + ruleName.getId() + " Was update ");
+		ruleName.setId(id);
+		ruleRepository.save(ruleName);
 
-    	model.addAttribute("ruleNames", ruleRepository.findAll());
-        	return "redirect:/ruleName/list";
-    }
+		log.info("ruleName id: " + ruleName.getId() + " Was update ");
 
-    @GetMapping("/ruleName/delete/{id}")
-    public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
-    	RuleName rule = ruleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id:" + id));
-    	ruleRepository.delete(rule);
-      
-		LOG.info("ruleName id: " + rule.getId() + " Was delete ");
+		model.addAttribute("ruleNames", ruleRepository.findAll());
+		return "redirect:/ruleName/list";
+	}
 
-    	model.addAttribute("ruleNames", ruleRepository.findAll());
-        	return "redirect:/ruleName/list";
-    }
+	@GetMapping("/ruleName/delete/{id}")
+	public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
+		RuleName rule = ruleRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id:" + id));
+		ruleRepository.delete(rule);
+
+		log.info("ruleName id: " + rule.getId() + " Was delete ");
+
+		model.addAttribute("ruleNames", ruleRepository.findAll());
+		return "redirect:/ruleName/list";
+	}
 }

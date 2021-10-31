@@ -7,27 +7,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class HomeController
-{
-	
-	public final Logger LOG =  LogManager.getLogger(HomeController.class.getName());
+public class HomeController {
 
-	
+	public final Logger log = LogManager.getLogger(HomeController.class.getName());
+
 	@RequestMapping("/")
-	public String home(Model model)
-	{
-		LOG.info("Home acces ");
+	public String home(Model model) {
+		log.info("Home acces ");
 
 		return "home";
 	}
 
 	@RequestMapping("/admin/home")
-	public String adminHome(Model model)
-	{
-		LOG.info("Admin home acces ");
+	public String adminHome(Model model) {
+		log.info("Admin home acces ");
 
 		return "redirect:/bidList/list";
 	}
-
 
 }

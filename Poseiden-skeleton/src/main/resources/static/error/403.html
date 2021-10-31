@@ -4,13 +4,13 @@
       <title>Spring Boot</title>
 </head>
 <body>
-   <h3>Access Denied Exception</h3>
+   <h3>Access Refusé</h3>
    <div>
 	    Logged in user: <b th:inline="text"  class="user"> [[${#httpServletRequest.remoteUser}]] </b>
 	    <form th:action="@{/app-logout}" method="POST">
 	         <input type="submit" value="Logout"/>
 	    </form>
    </div> 	 
-    <p class="error" th:text="${errorMsg}">Error</p>
+   <p>Vous n'avez pas le role requis pour acceder à cette resource</p>
 </body>
 </html>   

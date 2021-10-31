@@ -14,77 +14,77 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 import javax.validation.Valid;
 
 @Controller
 public class CurveController {
-	
-	public final Logger LOG =  LogManager.getLogger(CurveController.class.getName());
-		
+
+	public final Logger log = LogManager.getLogger(CurveController.class.getName());
+
 	@Autowired
 	CurvePointRepository curveRepository;
 
-    @RequestMapping("/curvePoint/list")
-    public String home(Model model)
-    {
-    	model.addAttribute("curvePoints", curveRepository.findAll());
-        	return "curvePoint/list";
-    }
+	@RequestMapping("/curvePoint/list")
+	public String home(Model model) {
+		model.addAttribute("curvePoints", curveRepository.findAll());
+		return "curvePoint/list";
+	}
 
-    @GetMapping("/curvePoint/add")
-    public String addBidForm(CurvePoint bid) {
-        return "curvePoint/add";
-    }
+	@GetMapping("/curvePoint/add")
+	public String addBidForm(CurvePoint bid) {
+		return "curvePoint/add";
+	}
 
-    @PostMapping("/curvePoint/validate")
-    public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
-    	if (!result.hasErrors()) {
+	@PostMapping("/curvePoint/validate")
+	public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
+		if (!result.hasErrors()) {
 			curveRepository.save(curvePoint);
-        
-			LOG.info("curvePoint id: " + curvePoint.getCurveId() + " Was save ");
+
+			log.info("curvePoint id: " + curvePoint.getCurveId() + " Was save ");
 
 			model.addAttribute("curvePoints", curveRepository.findAll());
-				return "redirect:/curvePoint/list";
+			return "redirect:/curvePoint/list";
 		}
-        return "curvePoint/add";
-    }
+		return "curvePoint/add";
+	}
 
-    @GetMapping("/curvePoint/update/{id}")
-    public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-    	CurvePoint curve = curveRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid curvePoint Id:" + id));
-      
-		LOG.info("curvePoint id: " + curve.getCurveId() + " Was show in form " );
+	@GetMapping("/curvePoint/update/{id}")
+	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+		CurvePoint curve = curveRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid curvePoint Id:" + id));
 
-    	model.addAttribute("curvePoint", curve);
-        return "curvePoint/update";
-    }
+		log.info("curvePoint id: " + curve.getCurveId() + " Was show in form ");
 
-    @PostMapping("/curvePoint/update/{id}")
-    public String updateBid(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint,
-                             BindingResult result, Model model) {
-    	if (result.hasErrors()) {
-    		return "curvePoint/update";
-    		
+		model.addAttribute("curvePoint", curve);
+		return "curvePoint/update";
+	}
+
+	@PostMapping("/curvePoint/update/{id}")
+	public String updateBid(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint, BindingResult result,
+			Model model) {
+		if (result.hasErrors()) {
+			return "curvePoint/update";
+
 		}
-    	
-    	curvePoint.setId(id);
-    	curveRepository.save(curvePoint);
-      
-		LOG.info("curvePoint id: " + curvePoint.getCurveId() + " Was update ");
 
-    	model.addAttribute("curvePoint", curveRepository.findAll());
-    		return "redirect:/curvePoint/list";
-    }
+		curvePoint.setId(id);
+		curveRepository.save(curvePoint);
 
-    @GetMapping("/curvePoint/delete/{id}")
-    public String deleteBid(@PathVariable("id") Integer id, Model model) {
-    	CurvePoint curve = curveRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid curvePoint Id:" + id));
-    	curveRepository.delete(curve);
-      
-		LOG.info("curvePoint id: " + curve.getCurveId() + " Was delete ");
-   
-    	model.addAttribute("curvePoints", curveRepository.findAll());
-        	return "redirect:/curvePoint/list";
-    }
+		log.info("curvePoint id: " + curvePoint.getCurveId() + " Was update ");
+
+		model.addAttribute("curvePoint", curveRepository.findAll());
+		return "redirect:/curvePoint/list";
+	}
+
+	@GetMapping("/curvePoint/delete/{id}")
+	public String deleteBid(@PathVariable("id") Integer id, Model model) {
+		CurvePoint curve = curveRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid curvePoint Id:" + id));
+		curveRepository.delete(curve);
+
+		log.info("curvePoint id: " + curve.getCurveId() + " Was delete ");
+
+		model.addAttribute("curvePoints", curveRepository.findAll());
+		return "redirect:/curvePoint/list";
+	}
 }
